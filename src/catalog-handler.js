@@ -98,8 +98,7 @@ const fetchTorrents = ({categoryId, args}) =>
 					search(
 						args.extra.search,
 						cond([
-							[propEq('id', 'Videos'), () => 200],
-							[propEq('id', 'Movies'), () => 200],
+							[propEq('id', 'Movies'), () => 201],
 							[propEq('id', 'Porn'), () => 500],
 							[propEq('id', 'Porn recent'), () => 600],
 							[propEq('id', 'TV shows'), () => 205],
