@@ -32,9 +32,9 @@ const anyPass = require('ramda/src/anyPass');
 const propEq = require('ramda/src/propEq');
 
 const FALLBACK_LOGO =
-	'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/02b4826d-e6a0-4129-8486-38b601edaa03/dcs8pfz-9e7d00ac-d2f7-4ff2-88cb-8466d383a96a.png';
+	'https://www.stremio.com/website/stremio-purple-small.png';
 const FALLBACK_BACKGROUND =
-	'https://www.wallpapertip.com/wmimgs/181-1815770_the-pirate-bay-the-pirate-bay-tracker-torrent.jpg';
+	'https://blog.stremio.com/wp-content/uploads/2021/07/tech-update-july-2021.jpg';
 
 const shouldShowSearch = anyPass([
 	propEq('season', 0),
