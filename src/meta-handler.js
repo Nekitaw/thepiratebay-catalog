@@ -9,14 +9,24 @@ const {
 	addIndex,
 } = require('ramda');
 const {encode} = require('base-64');
-const Magnet2torrent = require('magnet2torrent-js');
+
+//const Magnet2torrent = require('magnet2torrent-js');
+const magnetToTorrent = require('magnet-to-torrent');
+var itorrents = function(hash){
+    return `http://itorrents.net/torrent/${hash}.torrent`;
+};
+
+magnetToTorrent.addService(itorrents);
+magnetToTorrent.addService((hash)=>`https://torrage.info/torrent.php?h=${hash}`);
+magnetToTorrent.addService((hash)=>`https://btcache.me/torrent/${hash}`);
+
 const episodeParser = require('episode-parser');
 const isVideo = require('is-video');
 const {parseId, getId} = require('./tools');
 
 const mapIndexed = addIndex(map);
 
-const m2t = new Magnet2torrent({timeout: 120});
+//const m2t = new Magnet2torrent({timeout: 120});
 const urlExist = require('url-exist');
 const anyPass = require('ramda/src/anyPass');
 const propEq = require('ramda/src/propEq');
@@ -107,7 +117,10 @@ const metaHandler = async args => {
 		extra,
 		infoHash,
 	} = parseId(args);
-	const torrent = await m2t.getTorrent(magnetLink);
+	
+	//const torrent = await m2t.getTorrent(magnetLink);
+	const torrent = await magnetToTorrent.getLink(magnetLink);	
+
 	const videos = getVideoArray({
 		args,
 		torrent,
@@ -119,6 +132,8 @@ const metaHandler = async args => {
 		extra,
 		infoHash,
 	});
+
+	console.log(videos);
 
 	const logoUrl = poster.replace('/poster/', '/logo/');
 	const backgroundUrl = poster.replace('/poster/', '/background/');

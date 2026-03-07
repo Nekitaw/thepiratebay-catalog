@@ -5,8 +5,7 @@
     "main": "./src/server.js",
     "scripts": {
         "start": "node src/server.js",
-        "dev": "nodemon src/server.js",
-        "precommit": "lint-staged"
+        "dev": "nodemon src/server.js"        
     },
     "repository": {
         "type": "git",
@@ -32,6 +31,7 @@
         "delay": "^4.4.0",
         "episode-parser": "^2.0.0",
         "is-video": "^1.0.1",
+        "magnet-to-torrent": "^1.0.8",
         "magnet-uri": "^6.1.0",
         "magnet2torrent-js": "^1.4.0",
         "name-to-imdb": "^3.0.2",
