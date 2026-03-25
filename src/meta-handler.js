@@ -1,3 +1,4 @@
+const parseTorrent = require('parse-torrent');
 const {
 	ifElse,
 	filter,
@@ -8,21 +9,22 @@ const {
 	propOr,
 	addIndex,
 } = require('ramda');
-const {encode} = require('base-64');
+const { encode } = require('base-64');
+
 
 //const Magnet2torrent = require('magnet2torrent-js');
 const magnetToTorrent = require('magnet-to-torrent');
-var itorrents = function(hash){
-    return `http://itorrents.net/torrent/${hash}.torrent`;
+var itorrents = function (hash) {
+	return `http://itorrents.net/torrent/${hash}.torrent`;
 };
 
 magnetToTorrent.addService(itorrents);
-magnetToTorrent.addService((hash)=>`https://torrage.info/torrent.php?h=${hash}`);
-magnetToTorrent.addService((hash)=>`https://btcache.me/torrent/${hash}`);
+magnetToTorrent.addService((hash) => `https://torrage.info/torrent.php?h=${hash}`);
+magnetToTorrent.addService((hash) => `https://btcache.me/torrent/${hash}`);
 
 const episodeParser = require('episode-parser');
 const isVideo = require('is-video');
-const {parseId, getId} = require('./tools');
+const { parseId, getId } = require('./tools');
 
 const mapIndexed = addIndex(map);
 
@@ -41,71 +43,62 @@ const shouldShowSearch = anyPass([
 	pathEq(['extra', 'id'], 'Porn'),
 ]);
 
-const getVideoArray = ({
-	args,
-	torrent,
-	magnetLink,
-	seeders,
-	parsedName,
-	size,
-	poster,
-	extra,
-	infoHash,
-}) =>
-	ifElse(
-		anyPass([
-			pathEq(['args', 'type'], 'series'),
-			pathEq(['extra', 'id'], 'Porn'),
-		]),
-		pipe(
-			pathOr([], ['torrent', 'files']),
-			mapIndexed((file, index) => ({
-				...file,
-				index,
-			})),
-			filter(({name}) => isVideo(name)),
-			map(file => {
-				const episodeParsed = episodeParser(file.name);
-				const season = propOr(0, 'season', episodeParsed);
-				const episode = propOr(file.index, 'episode', episodeParsed);
-				const parameters = {
-					magnetLink,
-					parsedName: parsedName.trim(),
-					size,
-					seeders,
-					index: file.index,
-					extra,
-					infoHash,
-				};
+const fetchTorrentData = async (url) => {
+	try {
+		const res = await fetch(url);
+		const arrayBuffer = await res.arrayBuffer();
 
-				// Use firstAired hack to access search view or episode view.
-				const firstAired = shouldShowSearch({season, extra})
-					? ''
-					: '2002-01-31T22:00:00.000Z';
-				return {
-					name: file.name,
-					season,
-					number: episode,
-					firstAired,
-					id: `${getId(args)}:${season}:${episode}:${encode(
-						JSON.stringify(parameters),
-					)}`,
-					episode,
-				};
-			}),
-		),
-		() => [],
-	)({
-		args,
-		torrent,
-		magnetLink,
-		seeders,
-		parsedName,
-		size,
-		poster,
-		extra,
-		infoHash,
+		return parseTorrent(Buffer.from(arrayBuffer));
+	} catch (e) {
+		console.error("Error al obtener el torrent:", e);
+		return null;
+	}
+};
+
+const getVideoArray = async (data) => {
+	let { args, torrent, magnetLink, seeders, parsedName, size, extra, infoHash } = data;
+	let oldTorrent = "";
+
+	if (typeof torrent === 'string' && torrent.startsWith('http')) {
+		oldTorrent = torrent;
+		torrent = await fetchTorrentData(torrent);
+	}
+
+	const files = torrent?.files || [];
+
+	const videoFiles = files.filter(file => isVideo(file.name));
+
+	return videoFiles.map((file, index) => {
+
+		const episodeParsed = episodeParser(file.name || '');
+		const season = episodeParsed?.season || 0;
+		const episode = episodeParsed?.episode ?? index;
+
+		const parameters = {
+			magnetLink,
+			parsedName: parsedName?.trim(),
+			size,
+			seeders,
+			index,
+			extra,
+			infoHash,
+		};
+
+
+		const firstAired = shouldShowSearch({ season, extra })
+			? ''
+			: '2002-01-31T22:00:00.000Z';
+
+		return {
+			name: file.name,
+			season,
+			number: episode,
+			firstAired,
+			id: `${getId(args)}:${season}:${episode}:${encode(JSON.stringify(parameters))}`,
+			episode,
+		};
 	});
+};
 
 const metaHandler = async args => {
 	const {
@@ -117,11 +110,12 @@ const metaHandler = async args => {
 		extra,
 		infoHash,
 	} = parseId(args);
-	
-	//const torrent = await m2t.getTorrent(magnetLink);
-	const torrent = await magnetToTorrent.getLink(magnetLink);	
 
-	const videos = getVideoArray({
+	//const torrent = await m2t.getTorrent(magnetLink);
+	const torrent = await magnetToTorrent.getLink(magnetLink);
+	//console.log(`torrent: ${torrent}`);
+
+	const videos = await getVideoArray({
 		args,
 		torrent,
 		magnetLink,
@@ -133,7 +127,7 @@ const metaHandler = async args => {
 		infoHash,
 	});
 
-	console.log(videos);
+	//console.log(videos);
 
 	const logoUrl = poster.replace('/poster/', '/logo/');
 	const backgroundUrl = poster.replace('/poster/', '/background/');
@@ -152,7 +146,7 @@ const metaHandler = async args => {
 		description: parsedName.toUpperCase(),
 	};
 
-	return Promise.resolve({meta: metaObject});
+	return Promise.resolve({ meta: metaObject });
 };
 
 module.exports = metaHandler;

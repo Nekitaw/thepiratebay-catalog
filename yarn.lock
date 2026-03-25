@@ -867,14 +867,12 @@ bencode@^0.8.0:
   resolved "https://registry.npmjs.org/bencode/-/bencode-0.8.0.tgz"
   integrity sha1-MUNEjoKw+tx0VjPswqX4+oeTLxk= sha512-MWs3FqaWOGg5l+quIT9JTx7+SlcMbfPqqpWy+GOYi5rjZkX8i03tkNhAQn3pD2GAKENPpP3ScUR97ZUMffhHZA==
 
-bencode@^2.0.0, bencode@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/bencode/-/bencode-2.0.1.tgz"
-  integrity sha512-2uhEl8FdjSBUyb69qDTgOEeeqDTa+n3yMQzLW0cOzNf1Ow5bwcg3idf+qsWisIKRH8Bk8oC7UXL8irRcPA8ZEQ==
-  dependencies:
-    safe-buffer "^5.1.1"
+bencode@^2.0.0, bencode@^2.0.1, bencode@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/bencode/-/bencode-2.0.3.tgz"
+  integrity sha512-D/vrAD4dLVX23NalHwb8dSvsUsxeRPO8Y7ToKA015JQYq69MLDOMkC0uGZYA/MPpltLO8rt8eqFC2j8DxjTZ/w==
 
-bep53-range@^1.0.0:
+bep53-range@^1.0.0, bep53-range@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/bep53-range/-/bep53-range-1.1.0.tgz"
   integrity sha512-yGQTG4NtwTciX0Bkgk1FqQL4p+NiCQKpTSFho2lrxvUkXIlzyJDwraj8aYxAxRZMnnOhRr7QlIBoMRPEnIR34Q==
@@ -4372,12 +4370,12 @@ magnet-uri@^5.1.7:
     bep53-range "^1.0.0"
     thirty-two "^1.0.2"
 
-magnet-uri@^6.0.0, magnet-uri@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.npmjs.org/magnet-uri/-/magnet-uri-6.1.0.tgz"
-  integrity sha512-731qLviHaqN/Ni96wm6gNKuvoip+QHWTznjHNz/4qDlsHh3/CWJoL8fZ18IIRhGJgnWoKJp8RVE5lZvQ60Khhw==
+magnet-uri@^6.1.0, magnet-uri@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.npmjs.org/magnet-uri/-/magnet-uri-6.2.0.tgz"
+  integrity sha512-O9AgdDwT771fnUj0giPYu/rACpz8173y8UXCSOdLITjOVfBenZ9H9q3FqQmveK+ORUMuD+BkKNSZP8C3+IMAKQ==
   dependencies:
-    bep53-range "^1.0.0"
+    bep53-range "^1.1.0"
     thirty-two "^1.0.2"
 
 magnet2torrent-js@^1.4.0:
@@ -5173,17 +5171,18 @@ parse-torrent@^7.1.2:
     simple-get "^3.0.1"
     simple-sha1 "^3.0.0"
 
-parse-torrent@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.npmjs.org/parse-torrent/-/parse-torrent-9.1.0.tgz"
-  integrity sha512-TVht2kv44bTHEd55KgmfEHyDh5djIBZMhaD6uFWnxLhJWUXy8lrIOsjPSs4Tfzs9PTGIgGM0k+UG6CFphHgOZQ==
+parse-torrent@^9.1.5:
+  version "9.1.5"
+  resolved "https://registry.npmjs.org/parse-torrent/-/parse-torrent-9.1.5.tgz"
+  integrity sha512-K8FXRwTOaZMI0/xuv0dpng1MVHZRtMJ0jRWBJ3qZWVNTrC1MzWUxm9QwaXDz/2qPhV2XC4UIHI92IGHwseAwaA==
   dependencies:
-    bencode "^2.0.1"
+    bencode "^2.0.2"
     blob-to-buffer "^1.2.9"
     get-stdin "^8.0.0"
-    magnet-uri "^6.0.0"
-    simple-get "^4.0.0"
-    simple-sha1 "^3.0.1"
+    magnet-uri "^6.2.0"
+    queue-microtask "^1.2.3"
+    simple-get "^4.0.1"
+    simple-sha1 "^3.1.0"
 
 parse5-htmlparser2-tree-adapter@^6.0.0:
   version "6.0.1"
@@ -5548,10 +5547,10 @@ querystringify@^2.1.1:
   resolved "https://registry.npmjs.org/querystringify/-/querystringify-2.2.0.tgz"
   integrity sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==
 
-queue-microtask@^1.1.0, queue-microtask@^1.1.2, queue-microtask@^1.2.0:
-  version "1.2.2"
-  resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.2.tgz"
-  integrity sha512-dB15eXv3p2jDlbOiNLyMabYg1/sXvppd8DP2J3EOCQ0AkuSXCW2tP7mnVouVLJKgUMY6yP0kcQDVpLCN13h4Xg==
+queue-microtask@^1.1.0, queue-microtask@^1.2.0, queue-microtask@^1.2.2, queue-microtask@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
+  integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
 quick-lru@^4.0.1:
   version "4.0.1"
@@ -6005,7 +6004,7 @@ run-series@^1.0.2, run-series@^1.1.8, run-series@^1.1.9:
   resolved "https://registry.npmjs.org/run-series/-/run-series-1.1.9.tgz"
   integrity sha512-Arc4hUN896vjkqCYrUXquBFtRZdv1PfLbTYP71efP6butxyQ0kWpiNJyAgsxscmQg1cqvHY32/UCBzXedTpU2g==
 
-rusha@^0.8.1:
+rusha@^0.8.1, rusha@^0.8.13:
   version "0.8.13"
   resolved "https://registry.npmjs.org/rusha/-/rusha-0.8.13.tgz"
   integrity sha1-mghOe4YLF7/zAVuSxnpqM2GRUTo= sha512-yIk3IBAmuZ+/LutTJxnC18bNVuZOPS0oe9csSjgktBMNu6p8qNBkaeBNpuHuNbF3LrTIAv4FKE2F4ke3Iy8ulw==
@@ -6253,10 +6252,10 @@ simple-get@^3.0.1:
     once "^1.3.1"
     simple-concat "^1.0.0"
 
-simple-get@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.npmjs.org/simple-get/-/simple-get-4.0.0.tgz"
-  integrity sha512-ZalZGexYr3TA0SwySsr5HlgOOinS4Jsa8YB2GJ6lUNAazyAu4KG/VmzMTwAt2YVXzzVj8QmefmAonZIK2BSGcQ==
+simple-get@^4.0.0, simple-get@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/simple-get/-/simple-get-4.0.1.tgz"
+  integrity sha512-brv7p5WgH0jmQJr1ZDDfKDOSeWWg+OVypG99A/5vYGPqJ6pxiaHLy8nxtFjBA7oMa01ebA9gfh1uMCFqOuXxvA==
   dependencies:
     decompress-response "^6.0.0"
     once "^1.3.1"
@@ -6293,13 +6292,13 @@ simple-sha1@^2.0.0:
   dependencies:
     rusha "^0.8.1"
 
-simple-sha1@^3.0.0, simple-sha1@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/simple-sha1/-/simple-sha1-3.0.1.tgz"
-  integrity sha512-q7ehqWfHc1VhOm7sW099YDZ4I0yYX7rqyhqqhHV1IYeUTjPOhHyD3mXvv8k2P+rO7+7c8R4/D+8ffzC9BE7Cqg==
+simple-sha1@^3.0.0, simple-sha1@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/simple-sha1/-/simple-sha1-3.1.0.tgz"
+  integrity sha512-ArTptMRC1v08H8ihPD6l0wesKvMfF9e8XL5rIHPanI7kGOsSsbY514MwVu6X1PITHCTB2F08zB7cyEbfc4wQjg==
   dependencies:
-    queue-microtask "^1.1.2"
-    rusha "^0.8.1"
+    queue-microtask "^1.2.2"
+    rusha "^0.8.13"
 
 simple-websocket@^4.0.0:
   version "4.3.1"
