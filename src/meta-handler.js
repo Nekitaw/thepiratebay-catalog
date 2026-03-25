@@ -73,6 +73,8 @@ const getVideoArray = async (data) => {
 		const episodeParsed = episodeParser(file.name || '');
 		const season = episodeParsed?.season || 0;
 		const episode = episodeParsed?.episode ?? index;
+		const title = file.name.replace(/\.[^/.]+$/, "").replace(/[._]/g, " ").trim();
+		const thumb = `https://placehold.co/256x144/b584cf/fff/png?text=${episode}`;
 
 		const parameters = {
 			magnetLink,
@@ -88,14 +90,15 @@ const getVideoArray = async (data) => {
 		const firstAired = shouldShowSearch({ season, extra })
 			? ''
 			: '2002-01-31T22:00:00.000Z';
-
 		return {
-			name: file.name,
+			name: title,
+			//title,
 			season,
 			number: episode,
 			firstAired,
 			id: `${getId(args)}:${season}:${episode}:${encode(JSON.stringify(parameters))}`,
 			episode,
+			thumbnail: thumb,
 		};
 	});
 };
