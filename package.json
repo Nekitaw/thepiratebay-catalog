@@ -46,8 +46,9 @@
         "stremio-addon-sdk": "^1.1.0",
         "thepiratebay": "^1.4.8",
         "torrent-stream": "^1.2.1",
-        "url-exist": "^2.0.2",
-        "video-name-parser": "^1.4.6"
+        "url-exist": "github:Nekitaw/url-exist",
+        "video-name-parser": "^1.4.6",
+        "webtorrent": "^2.8.5"
     },
     "devDependencies": {
         "beamup-cli": "^1.2.4",
