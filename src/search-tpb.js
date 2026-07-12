@@ -1,5 +1,5 @@
 const request = require('request-promise');
-const {map, isEmpty} = require('ramda');
+const { map, isEmpty } = require('ramda');
 const delay = require('delay');
 const baseUrl = 'https://apibay.org';
 const timeout = 5000;
@@ -18,7 +18,7 @@ const getUserAgent = () => {
 
 const _request = async endpoint => {
 	const url = `${baseUrl}/${endpoint}`;
-	
+
 	console.log(`Requesting: ${url}`);
 
 	/*return request
@@ -26,10 +26,10 @@ const _request = async endpoint => {
 		.then(data => JSON.parse(data))
 		.then(map(toTorrent));
 		*/
-	let headers = new Headers({    
-	    "User-Agent"   : getUserAgent(),
+	let headers = new Headers({
+		"User-Agent": getUserAgent(),
 	});
-	return fetch(url, {headers:headers})
+	return fetch(url, { headers: headers })
 		.then(data => data.json())
 		.then(map(toTorrent));
 
@@ -72,8 +72,9 @@ const search = async (query, category, retry = true) => {
 
 const toTorrent = result => {
 	const infoHash = result.info_hash.toLowerCase();
-	console.log(result);
-	return {
+
+	let magnetTrackers = `&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce&tr=udp%3A%2F%2Ftracker.bittor.pw%3A1337%2Fannounce&tr=udp%3A%2F%2Fpublic.popcorn-tracker.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.dler.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969&tr=udp%3A%2F%2Fopen.demonii.com%3A1337%2Fannounce&tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&tr=udp%3A%2F%2Ftorrent.gresille.org%3A80%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337`;
+	let item = {
 		name: result.name,
 		size: result.size,
 		seeders: result.seeders,
@@ -81,8 +82,10 @@ const toTorrent = result => {
 		uploader: result.username,
 		imdb: isEmpty(result.imdb) ? 'tt1234567890' : result.imdb,
 		infoHash,
-		magnetLink: `magnet:?xt=urn:btih:${infoHash}`,
+		magnetLink: `magnet:?xt=urn:btih:${infoHash}${magnetTrackers}`,
 	};
+	console.log(JSON.stringify(item));
+	return item;
 };
 
-module.exports = {searchCategory, search};
+module.exports = { searchCategory, search };

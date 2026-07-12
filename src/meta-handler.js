@@ -17,8 +17,8 @@ var itorrents = function (hash) {
     return `http://itorrents.net/torrent/${hash}.torrent`;
 };
 
-magnetToTorrent.addService(itorrents, true);
 magnetToTorrent.addService((hash) => `https://webtor.io/${hash.toLowerCase()}.torrent`, true);
+magnetToTorrent.addService(itorrents);
 //magnetToTorrent.addService((hash) => `https://btcache.me/torrent/${hash}`);
 
 const episodeParser = require('episode-parser');
@@ -119,8 +119,8 @@ const metaHandler = async args => {
 
     let then = performance.now();
     const { default: urlExist } = await import('url-exist');
+    console.log(`magnet link: ${magnetLink}`);
     const torrent = await magnetToTorrent.getLink(magnetLink);
-    console.log(magnetLink);
     console.log(`Torrent fetch and parse time: ${(performance.now() - then)} ms`);
     console.log(`Torrent link: ${torrent}`);
     const videos = await getVideoArray({
