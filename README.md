@@ -11,7 +11,7 @@
 
 ![showTorrents](screenshots/search.png)
 
-## I not a programmer, please give me the .exe file
+## I am not a programmer, please give me the .exe file
 
 Here, your **.exe** file:
 
