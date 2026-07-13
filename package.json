@@ -2,10 +2,13 @@
     "name": "thepiratebay-catalog",
     "version": "1.2.0",
     "description": "The Pirate Bay Catalog to browse torrents.",
-    "main": "./src/server.js",
+    "type": "module",
+    "main": "dist/server.js",
+    "bin": "dist/server.js",
     "scripts": {
         "start": "node src/server.js",
-        "dev": "nodemon src/server.js"
+        "dev": "nodemon src/server.js",
+        "build": "rolldown -c ./rolldown.config.js && pkg . --fallback-to-source"
     },
     "repository": {
         "type": "git",
@@ -55,8 +58,17 @@
         "husky": "1.2.0",
         "lint-staged": "^10.5.3",
         "nodemon": "^2.0.6",
+        "postject": "^1.0.0-alpha.6",
         "prettier": "^2.2.1",
+        "rolldown": "^1.1.5",
         "xo": "^0.36.1"
+    },
+    "pkg": {
+        "targets": [
+            "node22-win-x64",
+            "node22-linux-x64"
+        ],
+        "outputPath": "dist/bin/"
     },
     "lint-staged": {
         "*.js": [

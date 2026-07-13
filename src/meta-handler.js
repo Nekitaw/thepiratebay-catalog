@@ -24,7 +24,7 @@ magnetToTorrent.addService(itorrents);
 const episodeParser = require('episode-parser');
 const isVideo = require('is-video');
 const { parseId, getId } = require('./tools');
-
+const urlExist = require('url-exist');
 const mapIndexed = addIndex(map);
 
 //const m2t = new Magnet2torrent({timeout: 120});
@@ -118,7 +118,7 @@ const metaHandler = async args => {
     } = parseId(args);
 
     let then = performance.now();
-    const { default: urlExist } = await import('url-exist');
+    //const { default: urlExist } = await import('url-exist');
     console.log(`magnet link: ${magnetLink}`);
     const torrent = await magnetToTorrent.getLink(magnetLink);
     console.log(`Torrent fetch and parse time: ${(performance.now() - then)} ms`);
